@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Özkaya — Kinetic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: poster-scale type in motion. Orange and black bands alternate; projects slide sideways while you scroll down. One committed look, no theme switch. */
+:root {
+  --hot: #ff4f1a;
+  --ink: #0c0c0c;
+  --bone: #f3f2ee;
+  --dim: rgba(12, 12, 12, .62);
+  --dim-on-ink: rgba(243, 242, 238, .6);
+  --display: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --body: "Manrope", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--hot); color: var(--ink); font: 500 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.ink :focus-visible { outline-color: var(--hot); }
+::selection { background: var(--ink); color: var(--hot); }
+.pad { padding-left: max(16px, 3.5vw, env(safe-area-inset-left, 0px)); padding-right: max(16px, 3.5vw, env(safe-area-inset-right, 0px)); }
+.ink { background: var(--ink); color: var(--bone); }
+.lbl { font: 800 12px/1.3 var(--body); letter-spacing: .14em; text-transform: uppercase; }
+
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding-block: calc(14px + env(safe-area-inset-top, 0px)) 14px; mix-blend-mode: difference; color: #fff; }
+.top a, .top button { text-decoration: none; font: 800 13px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; }
+.top nav { display: flex; gap: 22px; }
+
+/* hero */
+.hero { padding-block: 84px 0; display: grid; gap: 26px; }
+.hero h1 { font: 900 clamp(64px, 13.5vw, 230px)/.9 var(--display); text-transform: uppercase; letter-spacing: -.01em; display: flex; flex-wrap: wrap; column-gap: .22em; }
+.hero h1 span { display: block; }
+.hero h1 .o { color: transparent; -webkit-text-stroke: 2px var(--ink); }
+.hero-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: end; padding-bottom: 34px; }
+.hero-row p { font: 800 clamp(22px, 2.6vw, 38px)/1.1 var(--body); letter-spacing: -.02em; text-wrap: balance; max-width: 22ch; }
+.hero-row .meta { display: grid; gap: 6px; justify-items: end; text-align: right; }
+.badge { display: inline-flex; gap: 8px; align-items: center; background: var(--ink); color: var(--hot); padding: 8px 14px; border-radius: 999px; font: 800 13px/1 var(--body); }
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--hot); animation: blink 1.2s infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+
+/* marquee */
+.mq { overflow: hidden; white-space: nowrap; border-block: 2px solid var(--ink); padding-block: 14px; }
+.mq.ink { border-color: var(--ink); }
+.mq div { display: inline-block; font: 900 clamp(34px, 5vw, 72px)/1 var(--display); text-transform: uppercase; animation: mq 26s linear infinite; }
+.mq.rev div { animation-direction: reverse; }
+.mq i { font-style: normal; color: var(--hot); padding-inline: .35em; }
+.mq:not(.ink) i { color: var(--bone); }
+@keyframes mq { to { transform: translateX(-50%); } }
+
+/* numbers */
+.nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.nums div { padding-block: 40px; border-right: 2px solid var(--ink); padding-left: 18px; }
+.nums div:first-child { padding-left: 0; }
+.nums div:last-child { border-right: 0; }
+.nums b { display: block; font: 900 clamp(56px, 7vw, 120px)/.8 var(--display); font-variant-numeric: tabular-nums; }
+.nums span { display: block; margin-top: 14px; font-weight: 700; max-width: 14ch; }
+
+/* about */
+.about { padding-block: clamp(70px, 10vw, 140px); }
+.about p { font: 700 clamp(24px, 3.2vw, 46px)/1.18 var(--body); letter-spacing: -.02em; max-width: 30ch; text-wrap: pretty; }
+.about p em { font-style: normal; color: var(--hot); }
+
+/* horizontal projects */
+.hs { position: relative; }
+.hs-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+.hs-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; }
+.hs-head h2 { font: 900 clamp(60px, 10vw, 160px)/.8 var(--display); text-transform: uppercase; }
+.track { display: flex; gap: 20px; will-change: transform; width: max-content; }
+.card { width: min(460px, 78vw); flex: none; background: var(--bone); color: var(--ink); border-radius: 28px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: min(520px, 62vh); }
+.card:nth-child(3n+2) { background: var(--hot); }
+.card .c { display: flex; justify-content: space-between; }
+.card h3 { font: 900 clamp(38px, 4vw, 58px)/.88 var(--display); text-transform: uppercase; }
+.card .tg { font-weight: 700; }
+.card .d { color: var(--dim); font-size: 15px; }
+.card .m { margin-top: auto; display: flex; gap: 22px; flex-wrap: wrap; border-top: 2px solid var(--ink); padding-top: 14px; }
+.card .m b { display: block; font: 900 46px/.9 var(--display); }
+.card .m span { font-size: 13px; font-weight: 700; }
+.card .tech { font-size: 13px; font-weight: 700; color: var(--dim); }
+
+/* experience */
+.exp { padding-block: clamp(70px, 10vw, 130px); }
+.exp h2 { font: 900 clamp(60px, 10vw, 160px)/.8 var(--display); text-transform: uppercase; margin-bottom: 30px; }
+.job { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 30px; border-top: 2px solid var(--ink); padding-block: 26px; }
+.job .yr { font: 900 clamp(80px, 13vw, 210px)/.78 var(--display); color: transparent; -webkit-text-stroke: 2px var(--ink); }
+.job h3 { font: 900 clamp(34px, 3.6vw, 54px)/.9 var(--display); text-transform: uppercase; }
+.job .r { font-weight: 800; margin-top: 8px; }
+.job .r span { color: var(--dim); font-weight: 600; }
+.job ul { list-style: none; margin-top: 16px; display: grid; gap: 8px; }
+.job li { font: 800 18px/1.3 var(--body); padding-left: 28px; position: relative; }
+.job li::before { content: "✺"; position: absolute; left: 0; }
+.job details { margin-top: 14px; }
+.job summary { cursor: pointer; font: 800 12px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+.job details ul li { font: 500 15px/1.5 var(--body); color: var(--dim); }
+.job details ul li::before { content: "—"; }
+
+/* skills */
+.skills { padding-block: 60px 30px; }
+.skills h2 { font: 900 clamp(60px, 10vw, 160px)/.8 var(--display); text-transform: uppercase; margin-bottom: 26px; color: var(--hot); }
+.sk { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; border-top: 1px solid var(--dim-on-ink); padding-block: 16px; align-items: baseline; }
+.sk h3 { font: 800 14px/1.2 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--hot); }
+.sk p { font: 700 clamp(20px, 2.2vw, 30px)/1.25 var(--body); letter-spacing: -.01em; }
+.sk p span { color: var(--dim-on-ink); }
+.edu { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--dim-on-ink); padding-block: 22px 60px; font-weight: 700; }
+
+/* contact */
+.contact { padding-block: clamp(70px, 10vw, 140px) 110px; display: grid; gap: 30px; }
+.contact h2 { font: 900 clamp(90px, 22vw, 360px)/.76 var(--display); text-transform: uppercase; }
+.mail { font: 900 clamp(30px, 5.6vw, 92px)/.95 var(--display); text-align: left; word-break: break-all; border-bottom: 4px solid var(--ink); justify-self: start; }
+.mail:hover { color: var(--bone); }
+.links { display: flex; gap: 12px; flex-wrap: wrap; }
+.links a, .links button { padding: 14px 20px; border: 2px solid var(--ink); border-radius: 999px; font: 800 15px/1 var(--body); text-decoration: none; }
+.links a:hover, .links button:hover { background: var(--ink); color: var(--hot); }
+.foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-weight: 700; font-size: 14px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1 span { animation: in 1s cubic-bezier(.2,.9,.2,1) both; }
+  .hero h1 span:nth-child(2) { animation-delay: .07s; }
+  .hero h1 span:nth-child(3) { animation-delay: .14s; }
+  @keyframes in { from { transform: translateY(30%) skewY(4deg); } }
+}
+@media (prefers-reduced-motion: reduce) { .mq div, .badge::before { animation: none; } }
+@media (max-width: 860px) {
+  .top nav { display: none; }
+  .hero-row, .job { grid-template-columns: minmax(0, 1fr); }
+  .hero-row .meta { justify-items: start; text-align: left; }
+  .nums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nums div { border-right: 0; padding-left: 0; border-bottom: 2px solid var(--ink); padding-block: 26px; }
+  .sk { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  /* no pinning on small screens: projects become a swipe row */
+  .hs-sticky { position: static; height: auto; padding-block: 60px; overflow: visible; }
+  .track-wrap { overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * max(16px, 3.5vw)); padding-inline: max(16px, 3.5vw); padding-bottom: 10px; }
+  .card { scroll-snap-align: start; min-height: 0; }
+  .track { transform: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="top pad">
+  <a href="#">UBÖ®</a>
+  <nav><a href="#work" data-i18n="nav.work"></a><a href="#exp" data-i18n="nav.exp"></a><a href="#contact" data-i18n="nav.contact"></a></nav>
+  <button type="button" data-lang-btn>EN</button>
+</header>
+
+<section class="hero pad">
+  <h1 aria-label="Uğur Buğra Özkaya"><span>Uğur</span><span class="o">Buğra</span><span>Özkaya</span></h1>
+  <div class="hero-row">
+    <p id="headline"></p>
+    <div class="meta"><span class="badge" data-i18n="open"></span><span class="lbl" id="where"></span></div>
+  </div>
+</section>
+
+<div class="mq ink" aria-hidden="true"><div id="mq1"></div></div>
+
+<div class="nums pad" id="nums"></div>
+
+<section class="about pad ink"><p class="lbl" style="color:var(--hot);margin-bottom:22px" data-i18n="nav.about"></p><p id="summary"></p></section>
+
+<section class="hs ink pad" id="work">
+  <div class="hs-sticky">
+    <div class="hs-head"><h2 data-i18n="nav.work" style="color:var(--hot)"></h2><span class="lbl" id="count"></span></div>
+    <div class="track-wrap"><div class="track" id="track"></div></div>
+  </div>
+</section>
+
+<div class="mq rev" aria-hidden="true"><div id="mq2"></div></div>
+
+<section class="exp pad" id="exp"><h2 data-i18n="nav.exp"></h2><div id="jobs"></div></section>
+
+<section class="skills ink pad" id="skills"><h2 data-i18n="nav.skills"></h2><div id="sk"></div><div class="edu" id="edu"></div></section>
+
+<section class="contact pad" id="contact">
+  <span class="lbl" data-i18n="contact.l"></span>
+  <h2 data-i18n="contact.t"></h2>
+  <button class="mail" type="button" id="mail"></button>
+  <div class="links"><button type="button" id="copy" data-i18n="copy"></button><a id="li" target="_blank" rel="noopener">LinkedIn ↗</a><a id="gh" target="_blank" rel="noopener">GitHub ↗</a></div>
+  <div class="foot"><span>© <span id="yr"></span> Uğur Buğra Özkaya</span><span>Ankara, TR</span></div>
+</section>
+
+<script src="../assets/js/data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  const { D, L, esc, $, t } = S;
+  const UI = {
+    tr: { "nav.work": "İşler", "nav.exp": "Deneyim", "nav.contact": "İletişim", "nav.about": "Hakkımda", "nav.skills": "Araçlar", open: "Yeni fırsatlara açık",
+      "contact.l": "Bir sonraki proje?", "contact.t": "Merhaba.", copy: "E-postayı kopyala", copied: "Kopyalandı ✓", details: "Tüm detaylar", projects: "proje" },
+    en: { "nav.work": "Work", "nav.exp": "Experience", "nav.contact": "Contact", "nav.about": "About", "nav.skills": "Toolbox", open: "Open to opportunities",
+      "contact.l": "Next project?", "contact.t": "Hello.", copy: "Copy email", copied: "Copied ✓", details: "Full details", projects: "projects" }
+  };
+
+  function render() {
+    $("#headline").textContent = L(D.headline);
+    $("#where").textContent = L(D.experience[0].positions[0].title) + " · " + L(D.location);
+    const words = [...L(D.roles), ".NET 8", "HL7", "Next.js", "Azure DevOps"];
+    const line = words.map((w) => `${esc(w)}<i>✺</i>`).join("");
+    $("#mq1").innerHTML = line + line;
+    const w2 = ["Microservices", "Zero downtime", "Zero data loss", "1,500+ users", "40+ hotels", "100+ devices"];
+    $("#mq2").innerHTML = (w2.map((w) => `${esc(w)}<i>✺</i>`).join("")).repeat(2);
+    const fmt = (n) => n.toLocaleString(S.lang === "tr" ? "tr-TR" : "en-US");
+    $("#nums").innerHTML = D.stats.map((s) => `<div><b>${fmt(s.value)}${esc(s.suffix)}</b><span>${esc(L(s.label))}</span></div>`).join("");
+    // Emphasise the key phrase of the summary: the first sentence.
+    const sum = L(D.summary), cut = sum.indexOf(". ") + 1;
+    $("#summary").innerHTML = `<em>${esc(sum.slice(0, cut))}</em>${esc(sum.slice(cut))}`;
+    $("#count").textContent = `${D.projects.length} ${t("projects")} →`;
+    $("#track").innerHTML = D.projects.map((p) => `
+      <article class="card">
+        <div class="c"><span class="lbl">${p.category === "limak" ? "Limak Technology" : (S.lang === "tr" ? "Sağlık Bilişimi" : "Healthcare IT")}</span><span class="lbl">↗</span></div>
+        <h3>${esc(L(p.name))}</h3><p class="tg">${esc(L(p.tagline))}</p><p class="d">${esc(L(p.description))}</p>
+        <p class="tech">${p.tech.map(esc).join(" / ")}</p>
+        ${p.metrics.length ? `<div class="m">${p.metrics.slice(0, 3).map((m) => `<div><b>${esc(L(m.value))}</b><span>${esc(L(m.label))}</span></div>`).join("")}</div>` : ""}
+      </article>`).join("");
+    $("#jobs").innerHTML = D.experience.map((j) => {
+      const first = L(j.positions[j.positions.length - 1].period).match(/\d{4}/)[0];
+      return `<article class="job"><div class="yr">${first}</div><div>
+        <h3>${esc(j.company)}</h3><p class="r">${j.positions.map((p) => `${esc(L(p.title))} <span>${esc(L(p.period))}</span>`).join("<br>")}</p>
+        <ul>${L(j.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+        <details><summary>${t("details")}</summary><ul>${L(j.bullets).map((b) => `<li>${esc(b)}</li>`).join("")}</ul></details></div></article>`;
+    }).join("");
+    $("#sk").innerHTML = D.skills.map((g) => `<div class="sk"><h3>${esc(L(g.group))}</h3><p>${g.items.map((x) => esc(x)).join(" <span>/</span> ")}</p></div>`).join("");
+    const e = D.education;
+    $("#edu").innerHTML = `<span>${esc(e.school)} — ${L(e.degrees).map(esc).join(" + ")}</span><span>${esc(e.year)}</span>`;
+    $("#mail").textContent = D.email;
+    $("#li").href = D.linkedin; $("#gh").href = D.github;
+    $("#yr").textContent = new Date().getFullYear();
+    sizeTrack();
+  }
+
+  // Pin the projects section and translate the track horizontally while scrolling vertically.
+  const hs = $(".hs"), track = $("#track");
+  const mq = window.matchMedia("(max-width: 860px)");
+  function sizeTrack() {
+    if (mq.matches) { hs.style.height = ""; return; }
+    const extra = track.scrollWidth - window.innerWidth + 80;
+    hs.style.height = (window.innerHeight + Math.max(0, extra)) + "px";
+    onScroll();
+  }
+  function onScroll() {
+    if (mq.matches) return;
+    const r = hs.getBoundingClientRect();
+    const max = hs.offsetHeight - window.innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / (max || 1)));
+    const dist = Math.max(0, track.scrollWidth - window.innerWidth + 80);
+    track.style.transform = `translateX(${-p * dist}px)`;
+  }
+  window.addEventListener("scroll", () => requestAnimationFrame(onScroll), { passive: true });
+  window.addEventListener("resize", sizeTrack);
+
+  S.start(UI, render);
+  $("#copy").addEventListener("click", (e) => S.copyEmail(e.currentTarget, t("copied")));
+  $("#mail").addEventListener("click", () => S.copyEmail($("#copy"), t("copied")));
+  if (document.fonts) document.fonts.ready.then(sizeTrack);
+})();
+</script>
+</body>
+</html>

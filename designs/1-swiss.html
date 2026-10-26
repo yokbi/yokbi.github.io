@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Özkaya — Swiss</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a strict 12-column Swiss grid; giant condensed name, hairline rules, everything else in quiet index tables. */
+:root {
+  --paper: #ededE8;
+  --ink: #0f0f12;
+  --soft: #5f6068;
+  --rule: #0f0f12;
+  --klein: #1f2dff;
+  --on-klein: #ffffff;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --gut: max(16px, 3vw);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --paper: #0e0e11; --ink: #ecece6; --soft: #9a9ba3; --rule: #ecece6; --klein: #5866ff; --on-klein: #ffffff; color-scheme: dark; } }
+:root[data-theme="dark"] { --paper: #0e0e11; --ink: #ecece6; --soft: #9a9ba3; --rule: #ecece6; --klein: #5866ff; --on-klein: #ffffff; color-scheme: dark; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--klein); outline-offset: 3px; }
+::selection { background: var(--klein); color: var(--on-klein); }
+
+.wrap { padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(12px, 1.6vw, 24px); }
+.label { font: 500 11px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--soft); }
+
+/* top bar */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--rule); font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.top nav { display: flex; gap: clamp(10px, 2vw, 28px); flex-wrap: wrap; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { color: var(--klein); }
+.top button { border: 1px solid var(--rule); padding: 6px 10px; font: inherit; }
+.top button:hover { background: var(--ink); color: var(--paper); }
+
+/* hero */
+.hero { padding-block: clamp(20px, 4vw, 48px) 0; }
+.name { font-family: var(--display); font-weight: 900; font-variation-settings: "wdth" 62; text-transform: uppercase; line-height: .92; letter-spacing: -.01em; white-space: nowrap; padding-top: .06em; }
+.name span { display: block; width: max-content; }
+.name .l2 { color: var(--klein); }
+.hero-meta { margin-top: clamp(20px, 3vw, 36px); padding-block: 18px; border-top: 1px solid var(--rule); row-gap: 20px; }
+.hero-meta .head { grid-column: span 7; font: 500 clamp(22px, 2.6vw, 38px)/1.15 var(--display); font-variation-settings: "wdth" 100; letter-spacing: -.015em; text-wrap: balance; }
+.hero-meta .facts { grid-column: 9 / span 4; display: grid; gap: 10px; align-content: start; }
+.fact { display: grid; grid-template-columns: 7em 1fr; gap: 8px; border-bottom: 1px solid color-mix(in srgb, var(--rule) 25%, transparent); padding-bottom: 8px; }
+.fact b { font-weight: 500; }
+.avail { display: inline-flex; align-items: center; gap: 8px; }
+.avail::before { content: ""; width: 8px; height: 8px; background: var(--klein); }
+
+/* numbers */
+.numbers { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.num { grid-column: span 3; padding-block: 22px 26px; border-left: 1px solid var(--rule); padding-left: 14px; }
+.num:first-child { border-left: 0; padding-left: 0; }
+.num b { display: block; font: 900 clamp(48px, 7.5vw, 120px)/.85 var(--display); font-variation-settings: "wdth" 70; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.num span { display: block; margin-top: 12px; max-width: 16ch; }
+
+/* section */
+section { padding-block: clamp(56px, 8vw, 120px) 0; }
+.sec-head { align-items: end; padding-bottom: 14px; border-bottom: 2px solid var(--rule); }
+.sec-head h2 { grid-column: span 8; font: 900 clamp(40px, 6vw, 88px)/.9 var(--display); font-variation-settings: "wdth" 80; text-transform: uppercase; letter-spacing: -.01em; }
+.sec-head p { grid-column: 10 / span 3; text-align: right; }
+
+/* about */
+.about { padding-top: 26px; row-gap: 24px; }
+.about p { grid-column: 4 / span 7; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.5; text-wrap: pretty; }
+.about .label { grid-column: span 3; }
+
+/* experience */
+.job { border-bottom: 1px solid var(--rule); padding-block: 22px; row-gap: 14px; }
+.job .when { grid-column: span 2; font: 500 13px/1.5 var(--mono); }
+.job .who { grid-column: span 4; }
+.job .who h3 { font: 800 clamp(24px, 2.4vw, 34px)/1.05 var(--display); font-variation-settings: "wdth" 85; }
+.job .who p { color: var(--soft); margin-top: 6px; }
+.job .hl { grid-column: span 6; list-style: none; display: grid; gap: 8px; }
+.job .hl li { display: grid; grid-template-columns: 18px 1fr; font-weight: 500; }
+.job .hl li::before { content: "→"; color: var(--klein); }
+.job details { grid-column: 7 / span 6; }
+.job summary { cursor: pointer; list-style: none; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--klein); }
+.job summary::-webkit-details-marker { display: none; }
+.job summary::after { content: " +"; }
+.job details[open] summary::after { content: " −"; }
+.job details ul { margin-top: 12px; padding-left: 18px; color: var(--soft); display: grid; gap: 6px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 500 12px/1.4 var(--mono); color: var(--soft); }
+
+/* projects */
+.proj { border-bottom: 1px solid var(--rule); }
+.proj > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(12px, 1.6vw, 24px); row-gap: 6px; align-items: baseline; padding-block: 22px; position: relative; transition: background-color .2s, color .2s, padding .25s; }
+.proj > summary::-webkit-details-marker { display: none; }
+.proj > summary:hover, .proj[open] > summary { background: var(--klein); color: var(--on-klein); padding-left: 14px; padding-right: 14px; }
+.proj > summary:hover .label, .proj[open] > summary .label { color: var(--on-klein); opacity: .8; }
+.proj .cat { grid-column: span 2; }
+.proj .pn { grid-column: span 6; font: 800 clamp(26px, 3.4vw, 52px)/1 var(--display); font-variation-settings: "wdth" 75; text-transform: uppercase; letter-spacing: -.01em; }
+.proj .pm { grid-column: span 3; display: flex; gap: 10px; align-items: baseline; justify-content: flex-end; }
+.proj .pm b { font: 900 clamp(24px, 2.6vw, 40px)/1 var(--display); font-variation-settings: "wdth" 70; font-variant-numeric: tabular-nums; }
+.proj .pm span { font-size: 13px; max-width: 12ch; line-height: 1.25; }
+.proj .plus { grid-column: span 1; text-align: right; font: 400 28px/1 var(--display); }
+.proj[open] .plus { transform: rotate(45deg); }
+.proj .pt { grid-column: 3 / span 8; font-size: 15px; opacity: .85; }
+.proj .body { padding-block: 22px 30px; row-gap: 22px; }
+.proj .body .desc { grid-column: 3 / span 5; font-size: 17px; }
+.proj .body .side { grid-column: 9 / span 4; display: grid; gap: 16px; align-content: start; }
+.proj .body ul { list-style: none; display: grid; gap: 6px; }
+.proj .body li::before { content: "■ "; color: var(--klein); font-size: 10px; vertical-align: 2px; }
+.mrow { display: flex; flex-wrap: wrap; gap: 18px 28px; }
+.mrow div b { display: block; font: 900 32px/1 var(--display); font-variation-settings: "wdth" 70; color: var(--klein); }
+.mrow div span { font-size: 13px; color: var(--soft); }
+
+/* skills */
+.skills { padding-top: 26px; row-gap: 28px; }
+.sk { grid-column: span 4; border-top: 1px solid var(--rule); padding-top: 12px; }
+.sk h3 { font: 800 20px/1.1 var(--display); font-variation-settings: "wdth" 90; margin-bottom: 10px; }
+.sk p { color: var(--soft); line-height: 1.7; }
+.edu { grid-column: span 12; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: inherit; border-top: 2px solid var(--rule); padding-top: 16px; row-gap: 8px; }
+.edu .y { grid-column: span 2; font: 900 48px/.9 var(--display); font-variation-settings: "wdth" 70; color: var(--klein); }
+.edu div { grid-column: span 10; }
+.edu h3 { font: 800 22px/1.2 var(--display); font-variation-settings: "wdth" 90; }
+
+/* contact */
+.contact { background: var(--klein); color: var(--on-klein); margin-top: clamp(56px, 8vw, 120px); padding-block: clamp(40px, 7vw, 100px) 90px; }
+.contact .label { color: var(--on-klein); opacity: .75; }
+.contact h2 { font: 900 clamp(44px, 8.5vw, 150px)/.85 var(--display); font-variation-settings: "wdth" 70; text-transform: uppercase; margin-block: 14px 30px; text-wrap: balance; }
+.mail { display: inline-block; font: 600 clamp(20px, 3.4vw, 46px)/1.1 var(--display); font-variation-settings: "wdth" 90; border-bottom: 3px solid currentColor; word-break: break-all; text-align: left; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 28px; font: 500 13px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.links a, .links button { text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 4px; }
+.foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 60px; font: 500 12px/1 var(--mono); opacity: .8; }
+
+/* load moment: name slides up, everything else is static */
+@media (prefers-reduced-motion: no-preference) {
+  .name span { animation: up .9s cubic-bezier(.2,.8,.2,1) both; }
+  .name .l2 { animation-delay: .08s; }
+  @keyframes up { from { transform: translateY(14%); opacity: .2; } }
+}
+
+@media (max-width: 860px) {
+  .hero-meta .head, .hero-meta .facts, .about p, .about .label, .job .when, .job .who, .job .hl, .job details,
+  .proj .pn, .proj .pt, .proj .body .desc, .proj .body .side, .sec-head h2, .sec-head p { grid-column: 1 / -1; }
+  .sec-head p { text-align: left; margin-top: 10px; }
+  .num { grid-column: span 6; border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); }
+  .num:nth-child(-n+2) { border-top: 0; }
+  .num:nth-child(even) { border-left: 1px solid var(--rule); padding-left: 14px; }
+  .proj .cat { grid-column: span 10; }
+  .proj .plus { grid-column: span 2; }
+  .proj .pm { grid-column: 1 / -1; justify-content: flex-start; order: 5; }
+  .sk { grid-column: span 6; }
+  .edu .y { grid-column: 1 / -1; }
+  .edu div { grid-column: 1 / -1; }
+  .top nav { display: none; }
+}
+@media (max-width: 520px) { .sk { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span>UBÖ / <span data-i18n="role"></span></span>
+    <nav><a href="#work" data-i18n="nav.work"></a><a href="#experience" data-i18n="nav.exp"></a><a href="#skills" data-i18n="nav.skills"></a><a href="#contact" data-i18n="nav.contact"></a></nav>
+    <button type="button" data-lang-btn>EN</button>
+  </header>
+
+  <div class="hero">
+    <h1 class="name" id="name" aria-label="Uğur Buğra Özkaya"><span class="l1">Uğur Buğra</span><span class="l2">Özkaya</span></h1>
+    <div class="grid hero-meta">
+      <p class="head" id="headline"></p>
+      <div class="facts">
+        <div class="fact"><span class="label" data-i18n="f.role"></span><b id="fRole"></b></div>
+        <div class="fact"><span class="label" data-i18n="f.base"></span><b id="fBase"></b></div>
+        <div class="fact"><span class="label" data-i18n="f.status"></span><b class="avail" data-i18n="f.open"></b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid numbers" id="numbers"></div>
+
+  <section id="about">
+    <div class="grid about"><span class="label" data-i18n="nav.about"></span><p id="summary"></p></div>
+  </section>
+
+  <section id="work">
+    <div class="grid sec-head"><h2 data-i18n="nav.work"></h2><p class="label" data-i18n="work.hint"></p></div>
+    <div id="projects"></div>
+  </section>
+
+  <section id="experience">
+    <div class="grid sec-head"><h2 data-i18n="nav.exp"></h2><p class="label">2020 — <span data-i18n="now"></span></p></div>
+    <div id="jobs"></div>
+  </section>
+
+  <section id="skills">
+    <div class="grid sec-head"><h2 data-i18n="nav.skills"></h2><p class="label" data-i18n="skills.hint"></p></div>
+    <div class="grid skills" id="skillGrid"></div>
+  </section>
+</div>
+
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <p class="label" data-i18n="nav.contact"></p>
+    <h2 data-i18n="contact.title"></h2>
+    <button class="mail" type="button" id="mail"></button>
+    <div class="links">
+      <a id="li" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a id="gh" target="_blank" rel="noopener">GitHub ↗</a>
+      <button type="button" id="copy" data-i18n="contact.copy"></button>
+    </div>
+    <div class="foot"><span>© <span id="yr"></span> Uğur Buğra Özkaya</span><span>Ankara · 39.93° N 32.86° E</span></div>
+  </div>
+</footer>
+
+<script src="../assets/js/data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  const { D, L, esc, $, t } = S;
+  const UI = {
+    tr: { role: "Yazılım Takım Lideri", "nav.about": "Hakkımda", "nav.work": "İşler", "nav.exp": "Deneyim", "nav.skills": "Yetkinlik", "nav.contact": "İletişim",
+      "f.role": "Rol", "f.base": "Konum", "f.status": "Durum", "f.open": "Yeni fırsatlara açık", "work.hint": "Detay için satıra tıkla", now: "Bugün",
+      "skills.hint": "6 alan · 40+ araç", "contact.title": "Bir sonraki sistemi birlikte kuralım.", "contact.copy": "E-postayı kopyala", copied: "Kopyalandı ✓",
+      details: "Tüm detaylar", highlights: "Öne çıkanlar", stack: "Teknolojiler", limak: "Limak Technology", health: "Sağlık Bilişimi", edu: "Eğitim" },
+    en: { role: "Software Team Lead", "nav.about": "About", "nav.work": "Work", "nav.exp": "Experience", "nav.skills": "Skills", "nav.contact": "Contact",
+      "f.role": "Role", "f.base": "Based in", "f.status": "Status", "f.open": "Open to opportunities", "work.hint": "Click a row for details", now: "Today",
+      "skills.hint": "6 areas · 40+ tools", "contact.title": "Let's build the next system together.", "contact.copy": "Copy email", copied: "Copied ✓",
+      details: "Full details", highlights: "Highlights", stack: "Stack", limak: "Limak Technology", health: "Healthcare IT", edu: "Education" }
+  };
+
+  function fitName() {
+    const h = $("#name"), w = h.parentElement.clientWidth;
+    h.style.fontSize = "100px";
+    const widest = Math.max(...S.$$("span", h).map((s) => s.scrollWidth));
+    h.style.fontSize = Math.floor(100 * w / widest * 0.995) + "px";
+  }
+
+  function render() {
+    $("#headline").textContent = L(D.headline);
+    $("#fRole").textContent = L(D.experience[0].positions[0].title);
+    $("#fBase").textContent = L(D.location);
+    $("#summary").textContent = L(D.summary);
+    const fmt = (n) => n.toLocaleString(S.lang === "tr" ? "tr-TR" : "en-US");
+    $("#numbers").innerHTML = D.stats.map((s) => `<div class="num"><b>${fmt(s.value)}${esc(s.suffix)}</b><span>${esc(L(s.label))}</span></div>`).join("");
+
+    $("#projects").innerHTML = D.projects.map((p) => {
+      const m = p.metrics[0];
+      return `<details class="proj">
+        <summary>
+          <span class="cat label">${t(p.category)}</span>
+          <span class="pn">${esc(L(p.name))}</span>
+          <span class="pm">${m ? `<b>${esc(L(m.value))}</b><span>${esc(L(m.label))}</span>` : ""}</span>
+          <span class="plus" aria-hidden="true">+</span>
+          <span class="pt">${esc(L(p.tagline))}</span>
+        </summary>
+        <div class="grid body">
+          <p class="desc">${esc(L(p.description))}</p>
+          <div class="side">
+            ${p.metrics.length ? `<div class="mrow">${p.metrics.map((x) => `<div><b>${esc(L(x.value))}</b><span>${esc(L(x.label))}</span></div>`).join("")}</div>` : ""}
+            <div><p class="label">${t("highlights")}</p><ul>${L(p.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul></div>
+            <div><p class="label">${t("stack")}</p><div class="tags">${p.tech.map(esc).join(" ")}</div></div>
+          </div>
+        </div>
+      </details>`;
+    }).join("");
+
+    $("#jobs").innerHTML = D.experience.map((j) => `
+      <article class="grid job">
+        <div class="when">${j.positions.map((p) => esc(L(p.period))).join("<br>")}</div>
+        <div class="who"><h3>${esc(j.company)}</h3><p>${j.positions.map((p) => esc(L(p.title))).join(" · ")}</p><div class="tags" style="margin-top:12px">${j.tags.map(esc).join(" ")}</div></div>
+        <ul class="hl">${L(j.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+        <details><summary>${t("details")}</summary><ul>${L(j.bullets).map((b) => `<li>${esc(b)}</li>`).join("")}</ul></details>
+      </article>`).join("");
+
+    const e = D.education;
+    $("#skillGrid").innerHTML = D.skills.map((g) => `<div class="sk"><h3>${esc(L(g.group))}</h3><p>${g.items.map(esc).join(", ")}</p></div>`).join("") +
+      `<div class="edu"><span class="y">${esc(e.year)}</span><div><p class="label">${t("edu")}</p><h3>${esc(e.school)}, ${esc(e.location)}</h3><p>${L(e.degrees).map(esc).join(" · ")}</p></div></div>`;
+
+    $("#mail").textContent = D.email;
+    $("#li").href = D.linkedin; $("#gh").href = D.github;
+    $("#yr").textContent = new Date().getFullYear();
+  }
+
+  S.start(UI, render);
+  $("#mail").addEventListener("click", (e) => S.copyEmail($("#copy"), t("copied")));
+  $("#copy").addEventListener("click", (e) => S.copyEmail(e.currentTarget, t("copied")));
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitName);
+  fitName();
+  window.addEventListener("resize", fitName);
+})();
+</script>
+</body>
+</html>

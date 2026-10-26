@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Özkaya — Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;800;900&family=Chivo+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: an engineering blueprint. The hero is the system map of the work itself; the rest reads like spec sheets. */
+:root {
+  --bg: #0a1628;
+  --panel: #0e1e36;
+  --grid: rgba(110, 160, 255, .07);
+  --ink: #dce8ff;
+  --soft: #7f97bd;
+  --line: #2d5aa8;
+  --node: #10264a;
+  --signal: #ffb547;
+  --signal-ink: #1c1200;
+  --sans: "Chivo", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Chivo Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #eef3fb; --panel: #ffffff; --grid: rgba(30, 80, 170, .08); --ink: #0b1a30; --soft: #4f6488; --line: #8fb0e8; --node: #ffffff; --signal: #d46f00; --signal-ink: #ffffff; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #eef3fb; --panel: #ffffff; --grid: rgba(30, 80, 170, .08); --ink: #0b1a30; --soft: #4f6488; --line: #8fb0e8; --node: #ffffff; --signal: #d46f00; --signal-ink: #ffffff; color-scheme: light; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+.mono { font-family: var(--mono); }
+.k { font: 500 11px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.wrap { max-width: 1280px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 18px; border-bottom: 1px dashed var(--line); }
+header .id { font: 600 13px/1 var(--mono); }
+header nav { display: flex; gap: 20px; font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+header nav a { text-decoration: none; color: var(--soft); }
+header nav a:hover { color: var(--signal); }
+.chip-btn { border: 1px solid var(--line); padding: 6px 10px; font: 600 12px/1 var(--mono); }
+.chip-btn:hover { border-color: var(--signal); color: var(--signal); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; padding-block: 48px 28px; align-items: start; }
+.title-block { border: 1px solid var(--line); background: var(--panel); }
+.title-block .row { display: grid; grid-template-columns: 110px minmax(0, 1fr); border-bottom: 1px solid var(--line); }
+.title-block .row:last-child { border-bottom: 0; }
+.title-block .row > * { padding: 10px 14px; }
+.title-block .row > .k { border-right: 1px solid var(--line); display: flex; align-items: center; }
+.title-block h1 { font: 900 clamp(34px, 4vw, 56px)/.95 var(--sans); letter-spacing: -.03em; padding: 18px 14px; }
+.title-block .head { font-size: 19px; line-height: 1.4; font-weight: 600; padding: 16px 14px; text-wrap: balance; }
+.stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stat-row div { padding: 14px; border-right: 1px solid var(--line); }
+.stat-row div:last-child { border-right: 0; }
+.stat-row b { display: block; font: 600 clamp(20px, 2vw, 28px)/1 var(--mono); color: var(--signal); font-variant-numeric: tabular-nums; }
+.stat-row span { font-size: 12px; color: var(--soft); line-height: 1.3; display: block; margin-top: 6px; }
+.live { display: inline-flex; align-items: center; gap: 8px; }
+.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 10px #3ddc84; }
+
+/* diagram */
+.map { border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 70%, transparent); position: relative; }
+.map-head { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.map-scroll { overflow-x: auto; }
+.map svg { display: block; width: 100%; min-width: 620px; height: auto; }
+.edge { fill: none; stroke: var(--line); stroke-width: 1.4; }
+.edge.dash { stroke-dasharray: 4 4; }
+.zone { fill: none; stroke: var(--line); stroke-dasharray: 2 5; }
+.zone-t { font: 500 10px var(--mono); fill: var(--soft); letter-spacing: .1em; text-transform: uppercase; }
+.node rect { fill: var(--node); stroke: var(--line); stroke-width: 1.4; transition: stroke .2s, fill .2s; }
+.node text { font: 600 12px var(--sans); fill: var(--ink); }
+.node .sub { font: 400 10px var(--mono); fill: var(--soft); }
+.node.hot { cursor: pointer; }
+.node.hot rect { stroke: var(--signal); stroke-dasharray: 0; }
+.node.hot:hover rect, .node.hot:focus-visible rect { fill: color-mix(in srgb, var(--signal) 18%, var(--node)); }
+.node.sel rect { fill: var(--signal); stroke: var(--signal); }
+.node.sel text, .node.sel .sub { fill: var(--signal-ink); }
+.node:focus { outline: none; }
+.pkt { fill: var(--signal); }
+.pkt.b { fill: #59a0ff; }
+
+/* spec panel */
+.spec { border: 1px solid var(--line); border-top: 0; background: var(--panel); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+.spec > div { padding: 18px; min-width: 0; }
+.spec > div + div { border-left: 1px solid var(--line); }
+.spec h2 { font: 800 26px/1.1 var(--sans); letter-spacing: -.02em; margin-top: 6px; }
+.spec .tg { color: var(--soft); margin-top: 4px; }
+.spec .d { margin-top: 12px; font-size: 15px; }
+.spec ul { list-style: none; display: grid; gap: 6px; margin-top: 10px; font-size: 14px; }
+.spec li::before { content: "▸ "; color: var(--signal); }
+.ms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 10px; }
+.ms div { background: var(--panel); padding: 10px; }
+.ms b { font: 600 22px/1 var(--mono); color: var(--signal); display: block; }
+.ms span { font-size: 12px; color: var(--soft); }
+.tech { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tech span { font: 500 11px/1 var(--mono); padding: 5px 7px; border: 1px solid var(--line); }
+
+/* hl7 strip */
+.hl7 { border-block: 1px dashed var(--line); overflow: hidden; white-space: nowrap; font: 500 13px/1 var(--mono); color: var(--soft); padding-block: 12px; margin-top: 28px; }
+.hl7 div { display: inline-block; animation: ticker 60s linear infinite; }
+.hl7 em { color: var(--signal); font-style: normal; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* sections */
+section { padding-block: 72px 0; }
+.sh { display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.sh h2 { font: 900 clamp(30px, 4vw, 48px)/1 var(--sans); letter-spacing: -.03em; }
+.log { display: grid; }
+.entry { display: grid; grid-template-columns: 170px minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; padding-block: 22px; border-bottom: 1px dashed var(--line); }
+.entry .when { font: 500 13px/1.5 var(--mono); color: var(--signal); }
+.entry h3 { font: 800 24px/1.1 var(--sans); letter-spacing: -.02em; }
+.entry .roles { color: var(--soft); margin-top: 4px; font-size: 15px; }
+.entry ul { list-style: none; display: grid; gap: 6px; }
+.entry li { display: grid; grid-template-columns: 22px minmax(0, 1fr); font-weight: 600; }
+.entry li::before { content: "✓"; color: #3ddc84; font-family: var(--mono); }
+.entry details { margin-top: 10px; color: var(--soft); font-size: 14px; }
+.entry summary { cursor: pointer; font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink); }
+.entry details ul li { font-weight: 400; }
+.entry details ul li::before { content: "·"; color: var(--soft); }
+.entry details ul { margin-top: 10px; }
+
+.deps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 14px; }
+.dep { background: var(--panel); padding: 16px; }
+.dep h3 { font: 800 16px/1.2 var(--sans); margin-bottom: 8px; }
+.dep p { font: 400 13px/1.8 var(--mono); color: var(--soft); }
+.edu-line { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 18px; padding: 16px; border: 1px dashed var(--line); }
+.edu-line b { font-weight: 800; }
+
+.term { margin-block: 72px 100px; border: 1px solid var(--line); background: var(--panel); }
+.term .bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.term .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.term .body { padding: 24px; font: 400 15px/1.9 var(--mono); }
+.term h2 { font: 900 clamp(28px, 4vw, 52px)/1.05 var(--sans); letter-spacing: -.03em; margin-bottom: 18px; text-wrap: balance; }
+.term .p { color: var(--signal); }
+.term button.cmd { text-align: left; word-break: break-all; }
+.term button.cmd:hover { color: var(--signal); }
+.term a { text-decoration: none; }
+.term a:hover { color: var(--signal); }
+.foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-block: 0 90px; font: 500 12px/1 var(--mono); color: var(--soft); }
+
+@media (prefers-reduced-motion: reduce) { .hl7 div { animation: none; } }
+@media (max-width: 960px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .entry { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .deps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spec { grid-template-columns: minmax(0, 1fr); }
+  .spec > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  header nav { display: none; }
+}
+@media (max-width: 520px) { .deps { grid-template-columns: minmax(0, 1fr); } .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stat-row div:nth-child(2) { border-right: 0; } .stat-row div:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="id">UBÖ-ARCH / REV. <span id="rev"></span></span>
+    <nav><a href="#map" data-i18n="nav.map"></a><a href="#log" data-i18n="nav.log"></a><a href="#deps" data-i18n="nav.deps"></a><a href="#contact" data-i18n="nav.contact"></a></nav>
+    <button class="chip-btn" type="button" data-lang-btn>EN</button>
+  </header>
+
+  <div class="hero" id="map">
+    <div class="title-block">
+      <div class="row"><span class="k" data-i18n="tb.eng"></span><span class="live mono" data-i18n="tb.open"></span></div>
+      <h1 id="nm"></h1>
+      <div class="row"><span class="k" data-i18n="tb.role"></span><span id="role"></span></div>
+      <div class="row"><span class="k" data-i18n="tb.site"></span><span class="mono">Ankara · 39.93°N 32.86°E</span></div>
+      <p class="head" id="headline" style="border-top:1px solid var(--line)"></p>
+      <div class="stat-row" id="stats" style="border-top:1px solid var(--line)"></div>
+    </div>
+
+    <div>
+      <div class="map">
+        <div class="map-head"><span class="k" data-i18n="map.title"></span><span class="k" data-i18n="map.hint"></span></div>
+        <div class="map-scroll">
+          <svg viewBox="0 0 760 470" id="svg" role="group" aria-label="System map">
+            <rect class="zone" x="8" y="14" width="744" height="270" rx="4"/><text class="zone-t" x="20" y="32">Limak Technology · 2022 →</text>
+            <rect class="zone" x="8" y="300" width="744" height="160" rx="4"/><text class="zone-t" x="20" y="318">Healthcare IT · 2020 – 2022</text>
+            <g id="edges"></g><g id="nodes"></g><g id="pkts"></g>
+          </svg>
+        </div>
+      </div>
+      <div class="spec" id="spec" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<div class="hl7" aria-hidden="true"><div id="hl7"></div></div>
+
+<div class="wrap">
+  <section id="about">
+    <div class="sh"><h2 data-i18n="nav.about"></h2><span class="k">README.md</span></div>
+    <p id="summary" style="max-width:70ch;font-size:18px;margin-top:14px"></p>
+  </section>
+
+  <section id="log">
+    <div class="sh"><h2 data-i18n="nav.log"></h2><span class="k">CHANGELOG</span></div>
+    <div class="log" id="entries"></div>
+  </section>
+
+  <section id="deps">
+    <div class="sh"><h2 data-i18n="nav.deps"></h2><span class="k">dependencies</span></div>
+    <div class="deps" id="depGrid"></div>
+    <div class="edu-line" id="edu"></div>
+  </section>
+
+  <div class="term" id="contact">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="body">
+      <h2 data-i18n="contact.title"></h2>
+      <div><span class="p">$</span> <button class="cmd" type="button" id="mail"></button></div>
+      <div><span class="p">$</span> open <a id="li" target="_blank" rel="noopener">linkedin.com/in/ugurbugraozkaya ↗</a></div>
+      <div><span class="p">$</span> open <a id="gh" target="_blank" rel="noopener">github.com/yokbi ↗</a></div>
+      <div class="k" style="margin-top:10px" id="copyHint" data-i18n="contact.hint"></div>
+    </div>
+  </div>
+  <div class="foot"><span>© <span id="yr"></span> Uğur Buğra Özkaya</span><span data-i18n="foot"></span></div>
+</div>
+
+<script src="../assets/js/data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  const { D, L, esc, $, $$, t } = S;
+  const UI = {
+    tr: { "nav.map": "Sistem", "nav.log": "Deneyim", "nav.deps": "Yetkinlik", "nav.contact": "İletişim", "nav.about": "Hakkımda",
+      "tb.eng": "Durum", "tb.open": "Yeni fırsatlara açık", "tb.role": "Rol", "tb.site": "Konum", "map.title": "Fig. 1 — Kurduğum sistemler", "map.hint": "Turuncu düğümlere tıkla",
+      "contact.title": "Bir sonraki sistemin mimarisini birlikte çizelim.", "contact.hint": "E-postaya tıklayınca panoya kopyalanır", foot: "Ölçek yok · Tüm sistemler gerçek",
+      copied: "kopyalandı ✓", details: "Tüm detaylar", hl: "Öne çıkanlar" },
+    en: { "nav.map": "System", "nav.log": "Experience", "nav.deps": "Skills", "nav.contact": "Contact", "nav.about": "About",
+      "tb.eng": "Status", "tb.open": "Open to opportunities", "tb.role": "Role", "tb.site": "Site", "map.title": "Fig. 1 — Systems I've built", "map.hint": "Click the orange nodes",
+      "contact.title": "Let's draw the architecture of your next system.", "contact.hint": "Clicking the email copies it to the clipboard", foot: "Not to scale · All systems real",
+      copied: "copied ✓", details: "Full details", hl: "Highlights" }
+  };
+
+  // Diagram: nodes with optional project id; edges carry packets.
+  const N = {
+    users: { x: 30, y: 128, w: 96, h: 46, t: "Users", s: "1,500+" },
+    gw: { x: 170, y: 122, w: 132, h: 58, t: "Ocelot Gateway", s: ".NET 8", p: "backend-arch" },
+    career: { x: 350, y: 52, w: 138, h: 46, t: "Career İK", s: "Next.js", p: "career-ik" },
+    connect: { x: 350, y: 128, w: 138, h: 46, t: "Limak Connect", s: "Django · React", p: "limak-connect" },
+    auth: { x: 350, y: 204, w: 138, h: 46, t: "Auth · Notify", s: "services" },
+    mssql: { x: 540, y: 52, w: 98, h: 40, t: "MSSQL", s: "db" },
+    pg: { x: 540, y: 128, w: 98, h: 40, t: "PostgreSQL", s: "db" },
+    erp: { x: 660, y: 128, w: 80, h: 40, t: "ERP", s: "ext" },
+    gray: { x: 540, y: 204, w: 98, h: 40, t: "Graylog", s: "logs" },
+    cicd: { x: 170, y: 220, w: 132, h: 40, t: "Azure DevOps", s: "CI/CD → IIS" },
+    lis: { x: 30, y: 352, w: 120, h: 50, t: "Lab devices", s: "100+ · HL7", p: "lis" },
+    hisA: { x: 230, y: 352, w: 120, h: 50, t: "HIS A", s: "Oracle" },
+    h2h: { x: 410, y: 352, w: 120, h: 50, t: "H2H bridge", s: "REST · SOAP", p: "h2h" },
+    hisB: { x: 590, y: 340, w: 140, h: 40, t: "HIS B", s: "Oracle" },
+    mhrs: { x: 590, y: 404, w: 140, h: 40, t: "MHRS", s: "national", p: "mhrs" }
+  };
+  const E = [["users", "gw"], ["gw", "career"], ["gw", "connect"], ["gw", "auth"], ["career", "mssql"], ["connect", "pg"], ["pg", "erp"], ["auth", "gray"], ["cicd", "gw", 1],
+    ["lis", "hisA"], ["hisA", "h2h"], ["h2h", "hisB"], ["h2h", "mhrs"]];
+  let selected = "backend-arch";
+
+  function edgePath(a, b) {
+    const A = N[a], B = N[b];
+    if (a === "cicd") return `M${A.x + A.w / 2} ${A.y} V${B.y + B.h}`;
+    const x1 = A.x + A.w, y1 = A.y + A.h / 2, x2 = B.x, y2 = B.y + B.h / 2, mx = (x1 + x2) / 2;
+    return `M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`;
+  }
+
+  function drawMap() {
+    $("#edges").innerHTML = E.map(([a, b, d], i) => `<path id="e${i}" class="edge ${d ? "dash" : ""}" d="${edgePath(a, b)}"/>`).join("");
+    $("#nodes").innerHTML = Object.entries(N).map(([k, n]) => {
+      const hot = !!n.p;
+      return `<g class="node ${hot ? "hot" : ""} ${n.p === selected ? "sel" : ""}" ${hot ? `tabindex="0" role="button" data-p="${n.p}" aria-label="${esc(n.t)}"` : ""}>
+        <rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="4"/>
+        <text x="${n.x + 10}" y="${n.y + n.h / 2 - 2}">${esc(n.t)}</text>
+        <text class="sub" x="${n.x + 10}" y="${n.y + n.h / 2 + 13}">${esc(n.s)}</text></g>`;
+    }).join("");
+  }
+
+  // Packets travel along edges
+  const pkts = [];
+  function setupPackets() {
+    const g = $("#pkts");
+    g.innerHTML = "";
+    pkts.length = 0;
+    E.forEach((_, i) => {
+      const path = $("#e" + i);
+      const len = path.getTotalLength();
+      const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      c.setAttribute("r", "3");
+      c.setAttribute("class", "pkt" + (i >= 9 ? " b" : ""));
+      g.appendChild(c);
+      pkts.push({ c, path, len, o: Math.random(), sp: 0.12 + Math.random() * 0.1 });
+    });
+  }
+  let last = performance.now();
+  function frame(now) {
+    const dt = (now - last) / 1000; last = now;
+    pkts.forEach((p) => {
+      p.o = (p.o + dt * p.sp) % 1;
+      const pt = p.path.getPointAtLength(p.o * p.len);
+      p.c.setAttribute("cx", pt.x); p.c.setAttribute("cy", pt.y);
+    });
+    if (!S.reduceMotion) requestAnimationFrame(frame);
+  }
+
+  function renderSpec() {
+    const p = D.projects.find((x) => x.id === selected);
+    $("#spec").innerHTML = `
+      <div><span class="k">${p.category === "limak" ? "Limak Technology" : "Healthcare IT"} · ${esc(p.id.toUpperCase())}</span>
+        <h2>${esc(L(p.name))}</h2><p class="tg">${esc(L(p.tagline))}</p><p class="d">${esc(L(p.description))}</p></div>
+      <div>${p.metrics.length ? `<div class="ms">${p.metrics.map((m) => `<div><b>${esc(L(m.value))}</b><span>${esc(L(m.label))}</span></div>`).join("")}</div>` : ""}
+        <ul>${L(p.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+        <div class="tech">${p.tech.map((x) => `<span>${esc(x)}</span>`).join("")}</div></div>`;
+    $$(".node.hot").forEach((n) => n.classList.toggle("sel", n.dataset.p === selected));
+  }
+
+  function render() {
+    $("#rev").textContent = new Date().getFullYear() + "." + String(new Date().getMonth() + 1).padStart(2, "0");
+    $("#nm").textContent = D.name;
+    $("#role").textContent = L(D.experience[0].positions[0].title) + " · Limak Technology";
+    $("#headline").textContent = L(D.headline);
+    const fmt = (n) => n.toLocaleString(S.lang === "tr" ? "tr-TR" : "en-US");
+    $("#stats").innerHTML = D.stats.map((s) => `<div><b>${fmt(s.value)}${esc(s.suffix)}</b><span>${esc(L(s.label))}</span></div>`).join("");
+    $("#summary").textContent = L(D.summary);
+    renderSpec();
+    $("#entries").innerHTML = D.experience.map((j) => `
+      <article class="entry">
+        <div class="when">${j.positions.map((p) => esc(L(p.period))).join("<br>")}</div>
+        <div><h3>${esc(j.company)}</h3><p class="roles">${j.positions.map((p) => esc(L(p.title))).join(" ← ")}</p>
+          <div class="tech">${j.tags.map((x) => `<span>${esc(x)}</span>`).join("")}</div></div>
+        <div><ul>${L(j.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+          <details><summary>${t("details")} ↓</summary><ul>${L(j.bullets).map((b) => `<li>${esc(b)}</li>`).join("")}</ul></details></div>
+      </article>`).join("");
+    $("#depGrid").innerHTML = D.skills.map((g) => `<div class="dep"><h3>${esc(L(g.group))}</h3><p>${g.items.map(esc).join("<br>")}</p></div>`).join("");
+    const e = D.education;
+    $("#edu").innerHTML = `<span><b>${esc(e.school)}</b> · ${L(e.degrees).map(esc).join(" + ")}</span><span class="mono">${esc(e.location)} · ${esc(e.year)}</span>`;
+    $("#mail").textContent = "mail " + D.email;
+    $("#li").href = D.linkedin; $("#gh").href = D.github;
+    $("#yr").textContent = new Date().getFullYear();
+  }
+
+  // Sample HL7 v2 lab result message (illustrative, no real patient data)
+  const msg = "<em>MSH</em>|^~\\&|LIS|LAB|HIS|HOSP|20210614083012||<em>ORU^R01</em>|MSG00042|P|2.3   <em>PID</em>|1||000000^^^HOSP||DOE^JANE   <em>OBR</em>|1|||CBC^Complete Blood Count   <em>OBX</em>|1|NM|HGB^Hemoglobin||13.9|g/dL|12-16|N   <em>OBX</em>|2|NM|WBC^Leukocytes||6.2|10*3/uL|4-11|N   ";
+  $("#hl7").innerHTML = msg.repeat(4);
+
+  drawMap();
+  document.addEventListener("click", (e) => {
+    const n = e.target.closest(".node.hot");
+    if (n) { selected = n.dataset.p; renderSpec(); }
+  });
+  document.addEventListener("keydown", (e) => {
+    const n = e.target.closest && e.target.closest(".node.hot");
+    if (n && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); selected = n.dataset.p; renderSpec(); }
+  });
+  $("#mail").addEventListener("click", async (e) => { await S.copyEmail($("#copyHint"), t("copied")); });
+
+  S.start(UI, render);
+  setupPackets();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

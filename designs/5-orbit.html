@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Özkaya — Orbit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: a 3D particle field behind the page re-forms for every chapter (sphere, network, helix, ring); content floats on glass panels. One committed night look. */
+:root {
+  --night: #05060b;
+  --star: #ecebf3;
+  --soft: #9a99ad;
+  --gold: #f2c36b;
+  --glass: rgba(14, 14, 24, .55);
+  --edge: rgba(236, 235, 243, .12);
+  --display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--night); color: var(--star); font: 400 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+::selection { background: var(--gold); color: var(--night); }
+#gl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.fallback { position: fixed; inset: 0; z-index: 0; background: radial-gradient(60% 50% at 70% 40%, rgba(242,195,107,.16), transparent 70%), radial-gradient(40% 40% at 20% 80%, rgba(120,120,255,.12), transparent 70%); }
+main, header, footer { position: relative; z-index: 1; }
+.pad { padding-left: max(16px, 4vw, env(safe-area-inset-left, 0px)); padding-right: max(16px, 4vw, env(safe-area-inset-right, 0px)); }
+.k { font: 500 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+.gold { color: var(--gold); }
+
+header { position: fixed; top: 0; left: 0; right: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding-block: calc(16px + env(safe-area-inset-top, 0px)) 16px; }
+header .logo { font: 800 18px/1 var(--display); letter-spacing: -.02em; text-decoration: none; }
+header nav { display: flex; gap: 6px; padding: 5px; border: 1px solid var(--edge); border-radius: 999px; background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+header nav a { padding: 7px 13px; border-radius: 999px; text-decoration: none; font-size: 13px; color: var(--soft); transition: color .2s, background-color .2s; }
+header nav a.on, header nav a:hover { color: var(--star); background: rgba(255,255,255,.08); }
+.lang { border: 1px solid var(--edge); border-radius: 999px; padding: 8px 12px; font: 500 12px/1 var(--mono); background: var(--glass); }
+
+.chapter { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding-block: 110px 80px; }
+.chapter.right { justify-content: flex-end; }
+.panel { width: min(620px, 100%); background: var(--glass); border: 1px solid var(--edge); border-radius: 28px; padding: clamp(22px, 3vw, 36px); backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2); }
+.panel.wide { width: min(760px, 100%); }
+.panel h2 { font: 800 clamp(28px, 4.4vw, 58px)/1.02 var(--display); letter-spacing: -.03em; margin-block: 10px 18px; text-wrap: balance; overflow-wrap: anywhere; hyphens: auto; }
+
+/* hero (no panel: the field is the stage) */
+.hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-block: 120px 64px; }
+.hero h1 { font: 800 clamp(40px, 8vw, 124px)/.92 var(--display); letter-spacing: -.045em; overflow-wrap: anywhere; }
+.hero h1 .gold { display: block; }
+.hero .line { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-top: 28px; }
+.hero .hl { font: 500 clamp(18px, 1.8vw, 24px)/1.4 var(--body); max-width: 34ch; text-wrap: balance; }
+.hero .stats { display: flex; gap: clamp(18px, 3vw, 44px); flex-wrap: wrap; }
+.hero .stats b { display: block; font: 700 clamp(28px, 3vw, 42px)/1 var(--display); color: var(--gold); font-variant-numeric: tabular-nums; }
+.hero .stats span { font-size: 13px; color: var(--soft); display: block; margin-top: 6px; max-width: 13ch; line-height: 1.3; }
+.scroll { margin-top: 36px; display: flex; align-items: center; gap: 12px; }
+.scroll i { width: 46px; height: 1px; background: var(--soft); position: relative; overflow: hidden; }
+.scroll i::after { content: ""; position: absolute; inset: 0; background: var(--gold); transform: translateX(-100%); animation: run 2.2s ease-in-out infinite; }
+@keyframes run { to { transform: translateX(100%); } }
+
+.about p { font-size: clamp(17px, 1.5vw, 20px); line-height: 1.6; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--edge); border: 1px solid var(--edge); border-radius: 16px; overflow: hidden; margin-top: 22px; }
+.facts div { background: rgba(10,10,18,.6); padding: 12px 14px; }
+.facts b { display: block; font-weight: 600; font-size: 14px; margin-top: 4px; }
+
+/* projects */
+.plist { display: grid; gap: 8px; }
+.pj { border: 1px solid var(--edge); border-radius: 18px; background: rgba(255,255,255,.02); transition: border-color .2s, background-color .2s; }
+.pj[open] { border-color: color-mix(in srgb, var(--gold) 45%, transparent); background: rgba(242,195,107,.04); }
+.pj summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 16px 18px; }
+.pj summary::-webkit-details-marker { display: none; }
+.pj summary:hover h3 { color: var(--gold); }
+.pj h3 { font: 700 20px/1.15 var(--display); letter-spacing: -.02em; transition: color .2s; }
+.pj .tg { grid-column: 1; color: var(--soft); font-size: 14px; }
+.pj .m { grid-row: 1 / span 2; grid-column: 2; text-align: right; }
+.pj .m b { display: block; font: 700 24px/1 var(--display); color: var(--gold); }
+.pj .m span { font-size: 12px; color: var(--soft); }
+.pj .body { padding: 0 18px 18px; display: grid; gap: 12px; font-size: 15px; }
+.pj ul { list-style: none; display: grid; gap: 4px; }
+.pj li::before { content: "✦ "; color: var(--gold); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips span { font: 500 11px/1 var(--mono); padding: 6px 9px; border: 1px solid var(--edge); border-radius: 999px; color: var(--soft); }
+.mrow { display: flex; gap: 22px; flex-wrap: wrap; }
+.mrow b { display: block; font: 700 22px/1 var(--display); color: var(--gold); }
+.mrow span { font-size: 12px; color: var(--soft); }
+
+/* experience: an orbit path */
+.orbit { list-style: none; position: relative; display: grid; gap: 22px; padding-left: 28px; }
+.orbit::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(var(--gold), var(--edge)); }
+.orbit > li { position: relative; }
+.orbit > li::before { content: ""; position: absolute; left: -28px; top: 6px; width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--gold); background: var(--night); }
+.orbit > li:first-child::before { background: var(--gold); box-shadow: 0 0 16px var(--gold); }
+.orbit h3 { font: 700 22px/1.15 var(--display); letter-spacing: -.02em; }
+.orbit .r { color: var(--soft); font-size: 14px; margin-top: 2px; }
+.orbit .r b { color: var(--star); font-weight: 600; }
+.orbit ul { list-style: none; margin-top: 10px; display: grid; gap: 4px; font-size: 15px; }
+.orbit ul li::before { content: "→ "; color: var(--gold); }
+.orbit details { margin-top: 8px; font-size: 14px; color: var(--soft); }
+.orbit summary { cursor: pointer; font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--star); }
+.orbit details ul li::before { content: "· "; color: var(--soft); }
+
+/* skills */
+.sk { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; }
+.sk h3 { font: 700 15px/1.2 var(--display); margin-bottom: 8px; }
+.edu { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--edge); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.edu b { font: 700 18px/1.2 var(--display); }
+
+/* contact */
+.contact { text-align: center; justify-content: center; }
+.contact .panel { text-align: center; }
+.contact h2 { font-size: clamp(40px, 6vw, 84px); }
+.mail { font: 700 clamp(18px, 2.6vw, 30px)/1.2 var(--display); border-bottom: 1px solid var(--gold); word-break: break-all; }
+.mail:hover { color: var(--gold); }
+.btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+.btns a, .btns button { padding: 12px 18px; border-radius: 999px; border: 1px solid var(--edge); text-decoration: none; font-weight: 500; font-size: 14px; }
+.btns a:hover, .btns button:hover { border-color: var(--gold); color: var(--gold); }
+footer { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding-block: 0 90px; font: 500 12px/1 var(--mono); color: var(--soft); }
+
+@media (prefers-reduced-motion: reduce) { .scroll i::after { animation: none; } }
+@media (max-width: 760px) {
+  header nav { display: none; }
+  .facts, .sk { grid-template-columns: minmax(0, 1fr); }
+  .chapter { min-height: 0; padding-block: 60px; }
+}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="pad">
+  <a class="logo" href="#top">ubö<span class="gold">.</span></a>
+  <nav id="nav"><a href="#about" data-i18n="nav.about"></a><a href="#work" data-i18n="nav.work"></a><a href="#exp" data-i18n="nav.exp"></a><a href="#skills" data-i18n="nav.skills"></a><a href="#contact" data-i18n="nav.contact"></a></nav>
+  <button class="lang" type="button" data-lang-btn>EN</button>
+</header>
+
+<main id="top">
+  <section class="hero pad" data-shape="0">
+    <p class="k" data-i18n="kicker"></p>
+    <h1 style="margin-top:14px">Uğur Buğra <span class="gold">Özkaya</span></h1>
+    <div class="line">
+      <p class="hl" id="headline"></p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="scroll k"><i></i><span data-i18n="scroll"></span></div>
+  </section>
+
+  <section class="chapter pad" id="about" data-shape="1">
+    <div class="panel about">
+      <span class="k" data-i18n="nav.about"></span>
+      <h2 data-i18n="about.t"></h2>
+      <p id="summary"></p>
+      <div class="facts"><div><span class="k" data-i18n="f.base"></span><b id="fBase"></b></div><div><span class="k" data-i18n="f.langs"></span><b id="fLangs"></b></div><div><span class="k" data-i18n="f.focus"></span><b data-i18n="f.focusV"></b></div></div>
+    </div>
+  </section>
+
+  <section class="chapter right pad" id="work" data-shape="2">
+    <div class="panel wide">
+      <span class="k" data-i18n="nav.work"></span>
+      <h2 data-i18n="work.t"></h2>
+      <div class="plist" id="plist"></div>
+    </div>
+  </section>
+
+  <section class="chapter pad" id="exp" data-shape="3">
+    <div class="panel">
+      <span class="k" data-i18n="nav.exp"></span>
+      <h2 data-i18n="exp.t"></h2>
+      <ol class="orbit" id="orbit"></ol>
+    </div>
+  </section>
+
+  <section class="chapter right pad" id="skills" data-shape="1">
+    <div class="panel">
+      <span class="k" data-i18n="nav.skills"></span>
+      <h2 data-i18n="skills.t"></h2>
+      <div class="sk" id="sk"></div>
+      <div class="edu" id="edu"></div>
+    </div>
+  </section>
+
+  <section class="chapter contact pad" id="contact" data-shape="4">
+    <div class="panel wide">
+      <span class="k" data-i18n="nav.contact"></span>
+      <h2 data-i18n="contact.t"></h2>
+      <button class="mail" type="button" id="mail"></button>
+      <div class="btns"><button type="button" id="copy" data-i18n="copy"></button><a id="li" target="_blank" rel="noopener">LinkedIn ↗</a><a id="gh" target="_blank" rel="noopener">GitHub ↗</a></div>
+    </div>
+  </section>
+</main>
+<footer class="pad"><span>© <span id="yr"></span> Uğur Buğra Özkaya</span><span>39.93° N · 32.86° E</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  const { D, L, esc, $, $$, t } = S;
+  const UI = {
+    tr: { "nav.about": "Hakkımda", "nav.work": "İşler", "nav.exp": "Yolculuk", "nav.skills": "Yetkinlik", "nav.contact": "İletişim", kicker: "Yazılım Takım Lideri · Ankara", scroll: "Kaydır",
+      "about.t": "Mühendislik ve işletmeyi aynı masada buluşturuyorum.", "f.base": "Konum", "f.langs": "Diller", "f.focus": "Odak", "f.focusV": "Mimari · Liderlik · DevOps",
+      "work.t": "Canlıda çalışan, ölçülen işler.", "exp.t": "Hastane sunucularından mikroservislere.", "skills.t": "Araç kutusu", "contact.t": "Sıradaki sistem seninki olsun.",
+      copy: "E-postayı kopyala", copied: "Kopyalandı ✓", details: "Tüm detaylar" },
+    en: { "nav.about": "About", "nav.work": "Work", "nav.exp": "Journey", "nav.skills": "Skills", "nav.contact": "Contact", kicker: "Software Team Lead · Ankara", scroll: "Scroll",
+      "about.t": "I bring engineering and business to the same table.", "f.base": "Based in", "f.langs": "Languages", "f.focus": "Focus", "f.focusV": "Architecture · Leadership · DevOps",
+      "work.t": "Work that runs in production, and is measured.", "exp.t": "From hospital servers to microservices.", "skills.t": "Toolbox", "contact.t": "Let the next system be yours.",
+      copy: "Copy email", copied: "Copied ✓", details: "Full details" }
+  };
+
+  function render() {
+    $("#headline").textContent = L(D.headline);
+    const fmt = (n) => n.toLocaleString(S.lang === "tr" ? "tr-TR" : "en-US");
+    $("#stats").innerHTML = D.stats.map((s) => `<div><b>${fmt(s.value)}${esc(s.suffix)}</b><span>${esc(L(s.label))}</span></div>`).join("");
+    $("#summary").textContent = L(D.summary);
+    $("#fBase").textContent = L(D.location);
+    $("#fLangs").textContent = L(D.languages).join(", ");
+    $("#plist").innerHTML = D.projects.map((p, i) => {
+      const m = p.metrics[0];
+      return `<details class="pj" ${i === 0 ? "open" : ""}><summary><h3>${esc(L(p.name))}</h3><span class="tg">${esc(L(p.tagline))}</span>
+        <span class="m">${m ? `<b>${esc(L(m.value))}</b><span>${esc(L(m.label))}</span>` : ""}</span></summary>
+        <div class="body"><p>${esc(L(p.description))}</p>
+        ${p.metrics.length > 1 ? `<div class="mrow">${p.metrics.map((x) => `<div><b>${esc(L(x.value))}</b><span>${esc(L(x.label))}</span></div>`).join("")}</div>` : ""}
+        <ul>${L(p.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+        <div class="chips">${p.tech.map((x) => `<span>${esc(x)}</span>`).join("")}</div></div></details>`;
+    }).join("");
+    $("#orbit").innerHTML = D.experience.map((j) => `<li><h3>${esc(j.company)}</h3>
+      <p class="r">${j.positions.map((p) => `<b>${esc(L(p.title))}</b> · ${esc(L(p.period))}`).join("<br>")}</p>
+      <ul>${L(j.highlights).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
+      <details><summary>${t("details")}</summary><ul>${L(j.bullets).map((b) => `<li>${esc(b)}</li>`).join("")}</ul></details></li>`).join("");
+    $("#sk").innerHTML = D.skills.map((g) => `<div><h3>${esc(L(g.group))}</h3><div class="chips">${g.items.map((x) => `<span>${esc(x)}</span>`).join("")}</div></div>`).join("");
+    const e = D.education;
+    $("#edu").innerHTML = `<div><span class="k">${S.lang === "tr" ? "Eğitim" : "Education"}</span><br><b>${esc(e.school)}</b><p style="color:var(--soft);font-size:14px">${L(e.degrees).map(esc).join(" + ")}</p></div><b class="gold">${esc(e.year)}</b>`;
+    $("#mail").textContent = D.email;
+    $("#li").href = D.linkedin; $("#gh").href = D.github;
+    $("#yr").textContent = new Date().getFullYear();
+  }
+  S.start(UI, render);
+  $("#copy").addEventListener("click", (e) => S.copyEmail(e.currentTarget, t("copied")));
+  $("#mail").addEventListener("click", () => S.copyEmail($("#copy"), t("copied")));
+
+  /* ---------- Particle field ---------- */
+  const canvas = $("#gl");
+  if (!window.THREE) { canvas.replaceWith(Object.assign(document.createElement("div"), { className: "fallback" })); return; }
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false }); }
+  catch (err) { canvas.replaceWith(Object.assign(document.createElement("div"), { className: "fallback" })); return; }
+
+  const COUNT = window.innerWidth < 700 ? 4500 : 9000;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x05060b, 1);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+  camera.position.set(0, 0, 7);
+
+  // Shapes: 0 sphere, 1 galaxy disc, 2 network clusters, 3 double helix, 4 ring
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  function shape(k) {
+    const out = new Float32Array(COUNT * 3);
+    const clusters = Array.from({ length: 7 }, () => [rnd(-2.6, 2.6), rnd(-1.6, 1.6), rnd(-1.2, 1.2)]);
+    for (let i = 0; i < COUNT; i++) {
+      let x, y, z;
+      if (k === 0) {
+        const phi = Math.acos(1 - 2 * (i + .5) / COUNT), th = Math.PI * (1 + Math.sqrt(5)) * i;
+        const r = 2.2 + (Math.random() < .08 ? rnd(.2, 1.4) : rnd(-.03, .03));
+        x = r * Math.sin(phi) * Math.cos(th); y = r * Math.cos(phi); z = r * Math.sin(phi) * Math.sin(th);
+      } else if (k === 1) {
+        const arm = i % 3, d = Math.pow(Math.random(), .7) * 3.4, a = d * 1.6 + arm * (Math.PI * 2 / 3) + rnd(-.25, .25);
+        x = Math.cos(a) * d; z = Math.sin(a) * d; y = rnd(-.12, .12) * (3.6 - d);
+      } else if (k === 2) {
+        if (i % 9 === 0) { // links between clusters
+          const a = clusters[i % 7], b = clusters[(i * 3 + 1) % 7], f = Math.random();
+          x = a[0] + (b[0] - a[0]) * f; y = a[1] + (b[1] - a[1]) * f; z = a[2] + (b[2] - a[2]) * f;
+        } else {
+          const c = clusters[i % 7], r = Math.pow(Math.random(), 2) * .55, u = Math.acos(rnd(-1, 1)), v = rnd(0, Math.PI * 2);
+          x = c[0] + r * Math.sin(u) * Math.cos(v); y = c[1] + r * Math.cos(u); z = c[2] + r * Math.sin(u) * Math.sin(v);
+        }
+      } else if (k === 3) {
+        const f = i / COUNT, a = f * Math.PI * 10, side = i % 2 ? Math.PI : 0;
+        x = Math.cos(a + side) * 1.1 + rnd(-.06, .06); z = Math.sin(a + side) * 1.1 + rnd(-.06, .06); y = (f - .5) * 6.4;
+        if (i % 7 === 0) { const g = Math.random(); x = Math.cos(a) * 1.1 * (1 - 2 * g); z = Math.sin(a) * 1.1 * (1 - 2 * g); }
+      } else {
+        const a = rnd(0, Math.PI * 2), r = 2.5 + rnd(-.18, .18) + (Math.random() < .1 ? rnd(-.8, .8) : 0);
+        x = Math.cos(a) * r; y = Math.sin(a) * r; z = rnd(-.2, .2);
+      }
+      out[i * 3] = x; out[i * 3 + 1] = y; out[i * 3 + 2] = z;
+    }
+    return out;
+  }
+  const shapes = [0, 1, 2, 3, 4].map(shape);
+  const pos = new Float32Array(shapes[0]);
+  const col = new Float32Array(COUNT * 3);
+  const gold = new THREE.Color(0xf2c36b), star = new THREE.Color(0xdcdcf0), blue = new THREE.Color(0x7d8cff);
+  for (let i = 0; i < COUNT; i++) {
+    const r = Math.random(), c = r < .22 ? gold : r < .3 ? blue : star;
+    col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  const dot = document.createElement("canvas"); dot.width = dot.height = 64;
+  const dx = dot.getContext("2d"), grd = dx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grd.addColorStop(0, "rgba(255,255,255,1)"); grd.addColorStop(.35, "rgba(255,255,255,.55)"); grd.addColorStop(1, "rgba(255,255,255,0)");
+  dx.fillStyle = grd; dx.fillRect(0, 0, 64, 64);
+  const mat = new THREE.PointsMaterial({ size: .05, map: new THREE.CanvasTexture(dot), vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: .9 });
+  const pts = new THREE.Points(geo, mat);
+  scene.add(pts);
+
+  let target = 0;
+  const secs = $$("[data-shape]");
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    target = +e.target.dataset.shape;
+    const id = e.target.id;
+    $$("#nav a").forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + id));
+  }), { threshold: 0.45 });
+  secs.forEach((s) => io.observe(s));
+
+  const mouse = { x: 0, y: 0 };
+  window.addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; });
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    pts.position.x = w > 900 ? 1.4 : 0;
+  }
+  resize(); window.addEventListener("resize", resize);
+
+  let tm = 0;
+  function loop() {
+    tm += 0.005;
+    const tgt = shapes[target], a = pos;
+    for (let i = 0; i < a.length; i++) a[i] += (tgt[i] - a[i]) * 0.045;
+    geo.attributes.position.needsUpdate = true;
+    const side = target === 2 || target === 4 ? 1 : -1;
+    pts.position.x += (((innerWidth > 900 ? 1.4 : 0) * (target === 0 ? 1 : -side) ) - pts.position.x) * 0.03;
+    pts.rotation.y = tm + mouse.x * .6;
+    pts.rotation.x = (target === 1 ? .55 : 0) + mouse.y * .35;
+    renderer.render(scene, camera);
+    if (!S.reduceMotion) requestAnimationFrame(loop);
+  }
+  if (S.reduceMotion) { renderer.render(scene, camera); io.disconnect(); } else requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

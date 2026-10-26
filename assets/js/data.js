@@ -8,6 +8,12 @@ window.SITE_DATA = {
   github: "https://github.com/yokbi",
   location: { tr: "Ankara, Türkiye", en: "Ankara, Türkiye" },
 
+  // One-line positioning used as the main headline.
+  headline: {
+    tr: "Kritik sistemleri ayakta tutan ekipleri kuruyor ve yönetiyorum.",
+    en: "I build and lead the teams behind mission-critical systems."
+  },
+
   roles: {
     tr: ["Yazılım Takım Lideri", ".NET Mikroservis Mimarı", "Full Stack Geliştirici", "Entegrasyon Uzmanı"],
     en: ["Software Team Lead", ".NET Microservices Architect", "Full Stack Developer", "Integration Specialist"]
@@ -51,6 +57,11 @@ window.SITE_DATA = {
           "Own production systems end to end — incident management, reliability and business continuity."
         ]
       },
+      // Short, scannable results shown before the full bullet list.
+      highlights: {
+        tr: ["10 kişilik ekip, mimari onayda son söz", "Monolitten .NET 8 mikroservislere: +%40 ölçeklenebilirlik", "Yayın döngüsü günlerden saatlere"],
+        en: ["10-person team, final say on architecture", "Monolith to .NET 8 microservices: +40% scalability", "Release cycle from days to hours"]
+      },
       tags: [".NET 8", "Microservices", "Next.js", "Azure DevOps", "Docker", "MSSQL"]
     },
     {
@@ -71,6 +82,10 @@ window.SITE_DATA = {
           "Developed LIS modules in C#; built .NET web services and SOAP/REST integrations for healthcare systems and medical devices."
         ]
       },
+      highlights: {
+        tr: ["Hastane Bilgi Sistemi geliştirme", "MHRS ulusal randevu entegrasyonu", "LIS modülleri ve web servisleri"],
+        en: ["Hospital Information System development", "MHRS national appointment integration", "LIS modules and web services"]
+      },
       tags: ["C#", "Java", "VB.NET", "Oracle", "SOAP", "REST"]
     },
     {
@@ -90,6 +105,10 @@ window.SITE_DATA = {
           "Delivered 20+ enterprise system integrations and 100+ medical device (LIS) integrations supporting HL7 and proprietary protocols across private and public hospitals.",
           "Led a two-person support team through on-site testing and validation, guaranteeing zero data loss in mission-critical healthcare environments."
         ]
+      },
+      highlights: {
+        tr: ["20+ kurumsal sistem entegrasyonu", "100+ tıbbi cihaz (HL7) entegrasyonu", "Kritik ortamlarda sıfır veri kaybı"],
+        en: ["20+ enterprise system integrations", "100+ medical device (HL7) integrations", "Zero data loss in critical environments"]
       },
       tags: ["Delphi", "C#", "HL7", "Oracle", "XML/JSON"]
     }
@@ -132,7 +151,7 @@ window.SITE_DATA = {
       },
       metrics: [
         { value: { tr: "5 dk", en: "5 min" }, label: { tr: "izin onayı", en: "leave approval" } },
-        { value: "1", label: { tr: "birleşik arayüz", en: "unified interface" } }
+        { value: "3", label: { tr: "süreç tek ekranda", en: "workflows in one place" } }
       ],
       tech: ["Django", "Python", "PostgreSQL", "React.js", "ERP"]
     },
@@ -205,7 +224,9 @@ window.SITE_DATA = {
         tr: ["Ulusal sistemle entegrasyon", ".NET web servisleri", "SOAP/REST"],
         en: ["Integration with a national system", ".NET web services", "SOAP/REST"]
       },
-      metrics: [],
+      metrics: [
+        { value: { tr: "Ulusal", en: "National" }, label: { tr: "sistem entegrasyonu", en: "system integration" } }
+      ],
       tech: ["ASP.NET", "C#", "Oracle", "SOAP"]
     }
   ],

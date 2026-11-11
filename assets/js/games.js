@@ -47,7 +47,8 @@ window.GAMES = [
     pitch: {
       tr: "Boş bir meydanı dünyanın sokak lezzetleriyle dolu bir gece pazarına dönüştür.",
       en: "Turn an empty square into a night market full of street food from around the world."
-    }
+    },
+    link: "night-market/"
   },
   {
     id: "cozy-laundromat",

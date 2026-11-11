@@ -103,8 +103,8 @@ window.GAMES = [
   },
   {
     id: "donerci",
-    name: "Dönerci",
-    status: "dev",
+    name: "Dönerci Usta",
+    status: "soon",
     group: "casual",
     tile: "doner",
     platforms: ["iOS", "Android"],
@@ -112,7 +112,8 @@ window.GAMES = [
     pitch: {
       tr: "Parmağınla şişten eti kes, siparişi hazırla, müşterinin sabrı tükenmeden servis et.",
       en: "Swipe to slice the spit, build the order and serve it before the customer runs out of patience."
-    }
+    },
+    link: "donerci/"
   },
   {
     id: "futbol-zipla",

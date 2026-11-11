@@ -1,0 +1,13 @@
+:root { color-scheme: dark; }
+body {
+  margin: 0;
+  background: #0B0D10;
+  color: #F3F5F7;
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 1.6rem; line-height: 1.2; }
+h2 { font-size: 1.1rem; margin-top: 2rem; color: #D4FF4F; }
+a { color: #D4FF4F; }
+.meta, .lang { color: #98A2AE; font-size: .9rem; }
+hr { border: 0; border-top: 1px solid #262B33; margin: 3rem 0; }

@@ -15,6 +15,9 @@ Plain HTML/CSS/JS, no build step.
 - `night-market/` — Night Market Tycoon support page and privacy policy (`privacy/`, EN + TR on one page). Source of
   truth is `site/` in the `nightmarket` repository; the store listings and consoles link to these URLs, so do not
   move them.
+- `kahve/` — Kahveciler Kralı support page and privacy policy (`privacy/`, EN + TR on one page). Source of
+  truth is `docs/site/kahve/` in the `kahvehanegame` repository; App Store Connect links to these URLs, so do not
+  move them.
 - `app-ads.txt` — AdMob publisher line for every game. Must stay at the root.
 
 Local preview: `python3 -m http.server` and open http://localhost:8000.

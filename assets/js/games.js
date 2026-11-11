@@ -5,8 +5,8 @@
 //         "dev"   — in development
 //         "proto" — early prototype
 // group:  sport | tycoon | casual | puzzle  (the filter chips)
-// icon:   path under img/games/, or omit to draw `tile` (an inline glyph
-//         on a gradient) for games that do not have final art yet.
+// icon:   path under img/games/ (256px webp). Without one, set `tile` to a
+//         placeholder from TILES in site.js.
 
 window.GAMES = [
   {
@@ -67,7 +67,7 @@ window.GAMES = [
     name: "Tiny Ferry Company",
     status: "dev",
     group: "tycoon",
-    tile: "ferry",
+    icon: "img/games/tiny-ferry.webp",
     platforms: ["iOS", "Android"],
     genre: { tr: "İşletme", en: "Tycoon" },
     pitch: {
@@ -93,7 +93,7 @@ window.GAMES = [
     name: "Burger Shop",
     status: "dev",
     group: "tycoon",
-    tile: "burger",
+    icon: "img/games/burger-shop.webp",
     platforms: ["iOS", "Android"],
     genre: { tr: "Zaman yönetimi", en: "Time management" },
     pitch: {
@@ -106,7 +106,7 @@ window.GAMES = [
     name: "Dönerci Usta",
     status: "soon",
     group: "casual",
-    tile: "doner",
+    icon: "img/games/donerci.webp",
     platforms: ["iOS", "Android"],
     genre: { tr: "Hibrit casual", en: "Hybrid casual" },
     pitch: {
@@ -133,7 +133,7 @@ window.GAMES = [
     name: "Top Sektirme",
     status: "dev",
     group: "casual",
-    tile: "bounce",
+    icon: "img/games/top-sektirme.webp",
     platforms: ["iOS", "Android"],
     genre: { tr: "Sonsuz koşu", en: "Endless runner" },
     pitch: {

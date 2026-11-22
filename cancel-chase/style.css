@@ -1,0 +1,36 @@
+/* Night Market Tycoon site pages; colors are the ART.md day/night tokens. */
+:root {
+  --bg: #FFF8EE;
+  --card: #FFFFFF;
+  --text: #3A2316;
+  --muted: #7A5A44;
+  --accent: #C23B20;
+  --border: rgba(58, 35, 22, 0.12);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1A1735;
+    --card: #28234F;
+    --text: #FFF1DC;
+    --muted: #C9BCE8;
+    --accent: #FFB547;
+    --border: rgba(255, 241, 220, 0.14);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 1.8rem; line-height: 1.2; margin: 32px 0 4px; }
+h2 { font-size: 1.2rem; margin: 28px 0 6px; }
+a { color: var(--accent); }
+nav, .muted, .updated { color: var(--muted); }
+nav a.home { color: var(--text); font-weight: 700; text-decoration: none; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 4px 20px 12px; margin: 20px 0; }
+.card h2 { margin-top: 16px; }
+article + article { border-top: 1px solid var(--border); margin-top: 48px; }

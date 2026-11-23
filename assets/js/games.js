@@ -34,7 +34,8 @@ window.GAMES = [
     pitch: {
       tr: "Kadroyu kur, taktiği ver, transfer pazarında pazarlık et. Onlarca lig, çok sezonlu kariyer.",
       en: "Build the squad, set the tactics, haggle in the transfer market. Dozens of leagues, multi-season careers."
-    }
+    },
+    link: "teknik-direktor/"
   },
   {
     id: "night-market",
@@ -61,7 +62,8 @@ window.GAMES = [
     pitch: {
       tr: "Küçük, sıcak bir mahalle çamaşırhanesini makine makine büyüt. Aldığın her şey dükkânda görünür.",
       en: "Grow a small, cosy neighbourhood laundromat one machine at a time. Everything you buy shows up in the shop."
-    }
+    },
+    link: "cozy-laundromat/"
   },
   {
     id: "tiny-ferry",
@@ -74,7 +76,8 @@ window.GAMES = [
     pitch: {
       tr: "Adalar arasında hat aç, filonu büyüt, kaptan işe al. Yaşayan bir takımada haritası.",
       en: "Open routes between islands, grow a fleet and hire captains on a living archipelago map."
-    }
+    },
+    link: "tiny-ferry/"
   },
   {
     id: "hotel-tycoon",
@@ -87,7 +90,8 @@ window.GAMES = [
     pitch: {
       tr: "Butik bir oteli oda oda kur, misafirleri ağırla, işletmeyi büyüt.",
       en: "Build a boutique hotel room by room, look after your guests and grow the business."
-    }
+    },
+    link: "hotel-tycoon/"
   },
   {
     id: "burger-shop",
@@ -100,7 +104,8 @@ window.GAMES = [
     pitch: {
       tr: "İflas etmiş bir aşçısın. Seyyar arabadan başla, restoran sahibi ol.",
       en: "You are a chef who went bust. Start with a street cart and work your way up to a restaurant."
-    }
+    },
+    link: "fastfood/"
   },
   {
     id: "donerci",
@@ -127,7 +132,8 @@ window.GAMES = [
     pitch: {
       tr: "Dokun, topu sektir. Engellere değmeden altınları topla, yeni toplar aç.",
       en: "Tap to keep the ball up. Collect coins, dodge obstacles and unlock new balls."
-    }
+    },
+    link: "futbol-zipla/"
   },
   {
     id: "top-sektirme",
@@ -140,7 +146,8 @@ window.GAMES = [
     pitch: {
       tr: "Karakter yok, sen topsun. Zıpla, yay pediyle uç, aşağı dal, engelleri aş.",
       en: "No character, you are the ball. Jump, spring off pads, dive down and clear the obstacles."
-    }
+    },
+    link: "top-sektirme/"
   },
   {
     id: "futbol-draft",
@@ -153,7 +160,8 @@ window.GAMES = [
     pitch: {
       tr: "İlk 11'ini draft et, 5 maçlık eleme turnuvasını tek maç kaybetmeden kazan.",
       en: "Draft your starting eleven and win a five-match knockout without losing once."
-    }
+    },
+    link: "futbol-draft/"
   },
   {
     id: "lantern-harbor",
@@ -166,7 +174,8 @@ window.GAMES = [
     pitch: {
       tr: "Limanını kur, gemilerini sefere çıkar, ticaretle kasabanı büyüt.",
       en: "Build your harbour, send ships on expeditions and grow the town through trade."
-    }
+    },
+    link: "lantern-harbor/"
   },
   {
     id: "prism-relay",
@@ -179,7 +188,8 @@ window.GAMES = [
     pitch: {
       tr: "Aynaları ve prizmaları döndür, ışını hedefe ulaştır, yıldızları uyandır.",
       en: "Turn mirrors and prisms, bend the beam onto its targets and wake the stars."
-    }
+    },
+    link: "prism-relay/"
   },
   {
     id: "swing-state",
@@ -192,6 +202,7 @@ window.GAMES = [
     pitch: {
       tr: "Kırmızı mı mavi mi? 90 saniyede tek parmakla kalabalığı kendi rengine çevir.",
       en: "Red or blue? Ninety seconds, one finger: turn the crowd to your colour."
-    }
+    },
+    link: "swing-state-sprint/"
   }
 ];

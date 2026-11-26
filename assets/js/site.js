@@ -4,7 +4,8 @@
 
   var UI = {
     tr: {
-      navGames: "Oyunlar", navStudio: "Stüdyo", navContact: "İletişim",
+      navGames: "Oyunlar", navStudio: "Stüdyo", navContact: "İletişim", navPrivacy: "Gizlilik",
+      pSearch: "Oyun ara…", pNone: "Sonuç yok",
       heroKicker: "Yakında App Store'da",
       heroSubtitle: "Futbolcu Kariyeri",
       heroLead: "Teknik direktör değilsin. Sen 9 numarasın. Altyapıdan zirveye tek bir forvetin kariyeri: her maç, her karar, her sözleşme senin.",
@@ -25,10 +26,11 @@
       v3t: "Verin sende", v3: "Oynamak için hesap açtırmamaya çalışıyoruz. Kayıtların cihazında durur; ihtiyacımız olmayan veriyi istemeyiz.",
       contactTitle: "Bize yaz",
       contactLead: "Hata, öneri, iş birliği ya da sadece merhaba. Her e-postayı okuyoruz.",
-      footSupport: "No.9 destek", footPrivacy: "Gizlilik"
+      footSupport: "No.9 destek", footPrivacy: "Gizlilik politikaları"
     },
     en: {
-      navGames: "Games", navStudio: "Studio", navContact: "Contact",
+      navGames: "Games", navStudio: "Studio", navContact: "Contact", navPrivacy: "Privacy",
+      pSearch: "Search games…", pNone: "No matches",
       heroKicker: "Coming soon to the App Store",
       heroSubtitle: "Striker Career",
       heroLead: "You are not the manager. You are the No.9. One striker's career from the academy to the top: every match, every choice, every contract is yours.",
@@ -49,7 +51,7 @@
       v3t: "Your data stays yours", v3: "We try never to make you sign up to play. Saves live on your device, and we don't ask for data we don't need.",
       contactTitle: "Get in touch",
       contactLead: "Bugs, ideas, partnerships or just hello. We read every email.",
-      footSupport: "No.9 support", footPrivacy: "Privacy"
+      footSupport: "No.9 support", footPrivacy: "Privacy policies"
     }
   };
 
@@ -145,12 +147,55 @@
       n.textContent = UI[lang][n.getAttribute("data-t")];
     });
     document.getElementById("lang").textContent = lang === "tr" ? "EN" : "TR";
-    document.getElementById("privacyLink").href = "no9/privacy/" + (lang === "tr" ? "#tr" : "");
+    document.getElementById("pmenuSearch").placeholder = UI[lang].pSearch;
+    document.getElementById("pmenuSearch").setAttribute("aria-label", UI[lang].pSearch);
+    renderPrivacy();
     document.getElementById("countGames").textContent = GAMES.length;
     renderShots();
     renderFilters();
     renderGrid();
   }
+
+  // Privacy menu: every policy on the site, filterable by name.
+  function privacyHref(p) {
+    return lang === "tr" ? (p.trPath || p.path + "#tr") : p.path;
+  }
+  function renderPrivacy() {
+    var box = document.getElementById("pmenuList");
+    var q = document.getElementById("pmenuSearch").value.trim().toLocaleLowerCase(lang);
+    var list = (window.PRIVACY || []).filter(function (p) {
+      return !q || p.name.toLocaleLowerCase(lang).indexOf(q) !== -1;
+    });
+    box.innerHTML = list.length ? list.map(function (p) {
+      var ic = p.icon ? '<img src="' + p.icon + '" alt="" width="28" height="28" loading="lazy">'
+        : '<span class="ph">' + esc(p.name.charAt(0)) + "</span>";
+      return '<li><a href="' + privacyHref(p) + '">' + ic + "<span>" + esc(p.name) + "</span></a></li>";
+    }).join("") : '<li class="none">' + esc(UI[lang].pNone) + "</li>";
+  }
+  var pmenu = document.getElementById("pmenu");
+  var pbtn = document.getElementById("pmenuBtn");
+  var ppanel = document.getElementById("pmenuPanel");
+  function setPrivacyOpen(open) {
+    ppanel.hidden = !open;
+    pbtn.setAttribute("aria-expanded", open);
+    if (open) document.getElementById("pmenuSearch").focus();
+  }
+  pbtn.onclick = function () { setPrivacyOpen(ppanel.hidden); };
+  document.getElementById("privacyLink").onclick = function (e) {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    setPrivacyOpen(true);
+  };
+  document.getElementById("pmenuSearch").oninput = renderPrivacy;
+  document.addEventListener("click", function (e) {
+    if (!ppanel.hidden && !pmenu.contains(e.target) && e.target.id !== "privacyLink") setPrivacyOpen(false);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !ppanel.hidden) { setPrivacyOpen(false); pbtn.focus(); }
+  });
+
+  // yokbi.github.io/#privacy opens the menu, so it can be linked to directly.
+  if (location.hash === "#privacy") setTimeout(function () { setPrivacyOpen(true); }, 0);
 
   document.getElementById("lang").onclick = function () {
     lang = lang === "tr" ? "en" : "tr";

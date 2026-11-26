@@ -206,3 +206,28 @@ window.GAMES = [
     link: "swing-state-sprint/"
   }
 ];
+
+// Every privacy policy on the site, for the "Privacy" menu on the home page.
+// path is the English page (Turkish is at #tr); trPath overrides it in Turkish.
+window.PRIVACY = [
+  { name: "No.9", path: "no9/privacy/", icon: "img/games/no9.webp" },
+  { name: "Teknik Direktör", path: "teknik-direktor/privacy/", icon: "img/games/teknik-direktor.webp" },
+  { name: "Night Market Tycoon", path: "night-market/privacy/", icon: "img/games/night-market.webp" },
+  { name: "Cozy Laundromat Tycoon", path: "cozy-laundromat/privacy/", icon: "img/games/cozy-laundromat.webp" },
+  { name: "Tiny Ferry Company", path: "tiny-ferry/privacy/", icon: "img/games/tiny-ferry.webp" },
+  { name: "Hotel Tycoon", path: "hotel-tycoon/privacy/", icon: "img/games/hotel-tycoon.webp" },
+  { name: "Burger Shop", path: "fastfood/privacy/", icon: "img/games/burger-shop.webp" },
+  { name: "Burger Restaurant", path: "burger/privacy/" },
+  { name: "Dönerci Usta", path: "donerci/privacy/", trPath: "donerci/gizlilik/", icon: "img/games/donerci.webp" },
+  { name: "Kahveciler Kralı", path: "kahve/privacy/" },
+  { name: "Cancel Chase: Florida Man", path: "cancel-chase/privacy/" },
+  { name: "OKAAN RUN", path: "okaan-run/privacy/" },
+  { name: "Otowash Sim", path: "otowash/privacy/" },
+  { name: "Usta Masası", path: "usta-masasi/privacy/" },
+  { name: "Futbol Zıpla", path: "futbol-zipla/privacy/", icon: "img/games/futbol-zipla.webp" },
+  { name: "Top Sektirme", path: "top-sektirme/privacy/", icon: "img/games/top-sektirme.webp" },
+  { name: "Futbol Draft 5-0", path: "futbol-draft/privacy/", icon: "img/games/futbol-draft.webp" },
+  { name: "Lantern Harbor", path: "lantern-harbor/privacy/", icon: "img/games/lantern-harbor.webp" },
+  { name: "Prism Relay", path: "prism-relay/privacy/", icon: "img/games/prism-relay.webp" },
+  { name: "Swing State Sprint", path: "swing-state-sprint/privacy/", icon: "img/games/swing-state.webp" }
+];

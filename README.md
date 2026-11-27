@@ -6,7 +6,9 @@ Plain HTML/CSS/JS, no build step.
 
 - `assets/js/games.js` — every game on the site (name, status, platforms, TR/EN text). Add a game here.
 - `assets/js/site.js` — interface text (TR/EN) and rendering; placeholder tiles for games without final art.
-- `img/games/` — 256px card icons; `img/no9/` — No.9 screenshots, one set per language.
+- `img/games/` — 256px card icons, also used by the Privacy menu; `img/no9/` — No.9 screenshots, one set per language.
+  `burger.webp`, `otowash.webp` and `usta-masasi.webp` are placeholders: those games have no icon in their repos yet.
+  Cancel Chase still has no icon here.
 - `no9/` — No.9 support page and privacy policy. Their source of truth is `docs/site/` in the
   `oyuncusimulator` repository; the App Store listing links to these URLs, so do not move them.
 - `donerci/` — Dönerci Usta (Doner Master) support page, `privacy/` (EN) and `gizlilik/` (TR + KVKK).
